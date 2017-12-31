@@ -10,9 +10,12 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
-import org.springframework.orm.hibernate4.HibernateTransactionManager;
-import org.springframework.orm.hibernate4.LocalSessionFactoryBuilder;
+import org.springframework.orm.hibernate5.HibernateTransactionManager;
+import org.springframework.orm.hibernate5.LocalSessionFactoryBuilder;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
+
+import com.collaboration.model.Job;
+import com.collaboration.model.User;
 
 @Configuration
 @EnableTransactionManagement
@@ -46,18 +49,21 @@ public class DBconfig {
 		public SessionFactory getSessionFactory(DataSource dataSource) {
 			LocalSessionFactoryBuilder sessionBuilder = new LocalSessionFactoryBuilder(dataSource);
 			sessionBuilder.addProperties(getHibernateProperties());
-			sessionBuilder.scanPackages("com.collaboration");
-			System.out.println("Session");
-			
+			sessionBuilder.addAnnotatedClass(User.class);
+			sessionBuilder.addAnnotatedClass(Job.class);
+			System.out.println("Session factory config");
 			return sessionBuilder.buildSessionFactory();
-			
+			/*sessionBuilder.scanPackages("com.collaboration");
+			System.out.println("Session");
+			return sessionBuilder.buildSessionFactory();
+			*/
 		}
 
 		@Autowired
 		@Bean(name = "transactionManager")
 		public HibernateTransactionManager getTransactionManager(SessionFactory sessionFactory) {
 			HibernateTransactionManager transactionManager = new HibernateTransactionManager(sessionFactory);
-			System.out.println("Transaction");
+			System.out.println("Transaction Config");
 			return transactionManager;
 		}
 

@@ -7,23 +7,25 @@ import org.hibernate.criterion.Restrictions;
 import org.hibernate.Criteria;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
-/*import org.hibernate.Transaction;*/
-import org.hibernate.criterion.Restrictions;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
-import com.collaboration.dao.Userdao;
+import com.collaboration.dao.UserDAO;
 import com.collaboration.model.User;
-@Repository("userdao")
-public class Userdaoimpl implements Userdao{
-Logger Logger=LoggerFactory.getLogger(Userdaoimpl.class);
+
+
+@Repository
+public class UserDAOImpl implements UserDAO{
+	
+	
+Logger Logger=LoggerFactory.getLogger(UserDAOImpl.class);
 	
 	@Autowired
 	private SessionFactory sessionFactory;
 
-	public Userdaoimpl(SessionFactory sessionFactory) {
+	public UserDAOImpl(SessionFactory sessionFactory) {
 	
 		this.sessionFactory=sessionFactory;
 	}
@@ -56,14 +58,14 @@ Logger Logger=LoggerFactory.getLogger(Userdaoimpl.class);
 	}
 	
 	
-	@SuppressWarnings("deprecation")
+	/*@SuppressWarnings("deprecation")
 	public User getUser(String username) {
 		Criteria c=sessionFactory.getCurrentSession().createCriteria(User.class);
 		c.add(Restrictions.eq("username", username));
 		User user=(User)c.uniqueResult();
 		return user;
 	}
-
+*/
 	@SuppressWarnings("deprecation")
 	public User viewUser(int userid) {
 		Criteria c=sessionFactory.getCurrentSession().createCriteria(User.class);
@@ -77,14 +79,15 @@ Logger Logger=LoggerFactory.getLogger(Userdaoimpl.class);
 	public User login(User user) {
 		Session session=sessionFactory.openSession();
 
-		Query query=session.createQuery("from UsersDetails where userName=? and password=? and enable=?");
+		Query query=session.createQuery("from User where userName=? and password=? and enable=?");
 	
 		query.setString(0, user.getUserName()); //for assigning the values to parameter username
 		query.setString(1, user.getPassword());
 		query.setBoolean(2, true);
 		User validUsers=(User)query.uniqueResult();
-		session.close();
-		System.out.println("Dao completed");
+		/*query.setMaxResults(1).uniqueResult();*/
+	
+		System.out.println("DAO completed");
 		return validUsers;		
 	}
 
@@ -103,6 +106,13 @@ Logger Logger=LoggerFactory.getLogger(Userdaoimpl.class);
 		Criteria c=sessionFactory.openSession().createCriteria(User.class);
 		List<User> l = c.list();
 		return l;
+	}
+	@SuppressWarnings("deprecation")
+	public User getUser(int userId) {
+		Criteria c=sessionFactory.getCurrentSession().createCriteria(User.class);
+		c.add(Restrictions.eq("userId", userId));
+		User user=(User)c.uniqueResult();
+		return user;
 	}
 	
 }
