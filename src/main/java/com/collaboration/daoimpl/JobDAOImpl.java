@@ -1,7 +1,7 @@
 package com.collaboration.daoimpl;
 
 import java.util.List;
-
+import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.slf4j.Logger;
@@ -13,75 +13,43 @@ import javax.transaction.Transactional;
 import com.collaboration.dao.JobDAO;
 import com.collaboration.model.Job;
 
+
 @Repository
 public class JobDAOImpl  implements JobDAO{
 	
-	Logger Logger=LoggerFactory.getLogger(JobDAOImpl.class);
-
+	
+Logger Logger=LoggerFactory.getLogger(JobDAOImpl.class);
+	
 	@Autowired
 	private SessionFactory sessionFactory;
-
-	public JobDAOImpl(SessionFactory sessionFactory) {
 	
+	
+	public JobDAOImpl(SessionFactory sessionFactory) {
+		
 		this.sessionFactory=sessionFactory;
 	}
-	@Transactional
-	public boolean addJobs(Job job) {
-		try
-		{
-		    sessionFactory.getCurrentSession().save(job);
-			return true;
-		}catch(Exception e){
-			System.out.println("Exception raised: "+e);
-			return false;
-		}
-	}
-	
-	@Transactional
-	public boolean updateJobs(Job job) {
-		try{
-			sessionFactory.getCurrentSession().update(job);
-			return true;
-		}catch(Exception e){
-			System.out.println("Exception raised: "+e);
-			return false;
-		}
-	}
-	
-	@Transactional
-	public boolean deleteJobs(Job job) {
-		try
-		{
-			sessionFactory.getCurrentSession().delete(job);
-			return true;
-			
-		}catch(Exception e){
-			
-			System.out.println("Exception raised: "+e);
-			return false;
-		}
-	}
-	
-	@Transactional
-	public Job getJobDetail(int jobId) {
-Session session = sessionFactory.openSession();
-		
-		Job jobsObj = session.get(Job.class, jobId);
-		
+@Transactional
+	public boolean saveJob(Job job) {
+		Session session=sessionFactory.openSession();
+		session.save(job);
+		session.flush();
 		session.close();
-		
-		return jobsObj;
+		return true;
 	}
-	
-	@Transactional
-	public List<Job> getAllJobDetails() {
-Session session = sessionFactory.openSession();
-		
-		List<Job> jobsList= session.createQuery("from JobDetail",Job.class).list();
-		
+
+	public List<Job> getAllJobs() {
+		Session session=sessionFactory.openSession();
+		Query query=session.createQuery("from Job");
+		List<Job> jobs=query.list();
 		session.close();
-		
-		return jobsList;
+		return jobs;
+	}
+
+	public Job getJobById(int id) {
+		 Session session=sessionFactory.openSession();
+	        Job job=(Job)session.get(Job.class, id);
+	        session.close();
+	        return job;
 	}
 
 }

@@ -49,6 +49,7 @@ public class DBconfig {
 		public SessionFactory getSessionFactory(DataSource dataSource) {
 			LocalSessionFactoryBuilder sessionBuilder = new LocalSessionFactoryBuilder(dataSource);
 			sessionBuilder.addProperties(getHibernateProperties());
+			sessionBuilder.scanPackages("com.collaboration");
 			sessionBuilder.addAnnotatedClass(User.class);
 			sessionBuilder.addAnnotatedClass(Job.class);
 			System.out.println("Session factory config");
@@ -66,5 +67,5 @@ public class DBconfig {
 			System.out.println("Transaction Config");
 			return transactionManager;
 		}
-
+		
 }

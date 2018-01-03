@@ -15,7 +15,6 @@ import org.springframework.stereotype.Repository;
 import com.collaboration.dao.UserDAO;
 import com.collaboration.model.User;
 
-
 @Repository
 public class UserDAOImpl implements UserDAO{
 	
@@ -29,6 +28,7 @@ Logger Logger=LoggerFactory.getLogger(UserDAOImpl.class);
 	
 		this.sessionFactory=sessionFactory;
 	}
+	
 	public boolean saveOrUpdate(User user) {
 		Logger.info("save Operation started", user.getUser_id());
 		Session session=sessionFactory.openSession();
@@ -42,7 +42,8 @@ Logger Logger=LoggerFactory.getLogger(UserDAOImpl.class);
 	
 		return true;		
 	}
-@Transactional
+	
+    @Transactional
 	public User updateUser(User user) {
 		Session session=sessionFactory.openSession();
 		Transaction tx=session.beginTransaction();
@@ -57,15 +58,6 @@ Logger Logger=LoggerFactory.getLogger(UserDAOImpl.class);
 		
 	}
 	
-	
-	/*@SuppressWarnings("deprecation")
-	public User getUser(String username) {
-		Criteria c=sessionFactory.getCurrentSession().createCriteria(User.class);
-		c.add(Restrictions.eq("username", username));
-		User user=(User)c.uniqueResult();
-		return user;
-	}
-*/
 	@SuppressWarnings("deprecation")
 	public User viewUser(int userid) {
 		Criteria c=sessionFactory.getCurrentSession().createCriteria(User.class);

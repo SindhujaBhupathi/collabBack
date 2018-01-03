@@ -27,7 +27,7 @@ public class UserRESTController {
 		if (result) {
 			return new ResponseEntity<User>(user, HttpStatus.OK);
 		} else {
-			Error error = new Error("unable to register user details");
+			Error error = new Error("unable to register user ");
 			return new ResponseEntity<Error>(error, HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}
