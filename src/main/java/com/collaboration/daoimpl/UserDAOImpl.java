@@ -106,5 +106,13 @@ Logger Logger=LoggerFactory.getLogger(UserDAOImpl.class);
 		User user=(User)c.uniqueResult();
 		return user;
 	}
+	@SuppressWarnings("deprecation")
+	@Transactional
+	public User getUserByUsername(String username) {
+		Criteria c=sessionFactory.getCurrentSession().createCriteria(User.class);
+		c.add(Restrictions.eq("username", username));
+		User user=(User)c.uniqueResult();
+		return user;
+	}
 	
 }

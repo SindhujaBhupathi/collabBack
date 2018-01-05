@@ -1,10 +1,8 @@
 /*package com.collaboration.test;
 
-import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 
 import java.util.Date;
-import java.util.List;
 
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -15,7 +13,6 @@ import com.collaboration.config.DBconfig;
 import com.collaboration.dao.JobDAO;
 import com.collaboration.dao.UserDAO;
 import com.collaboration.model.Job;
-import static org.junit.Assert.*;
 
 
 @ComponentScan("com.collaboration")
@@ -31,7 +28,7 @@ public class JobTest {
 		context.register(DBconfig.class);
 		context.scan("com.collaboration");
 		context.refresh();
-
+		context.close();
 		jobDAO=(JobDAO)context.getBean("jobdao");
 	}
 	
@@ -51,11 +48,6 @@ public class JobTest {
 		
 		
 	}
-
-	
-	
-  
-	
 
 }
 */

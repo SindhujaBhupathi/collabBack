@@ -28,7 +28,7 @@ public class JobRESTController {
 	@RequestMapping(value="/savejob", method=RequestMethod.POST)
 	public ResponseEntity<?> saveJob(@RequestBody Job job,HttpSession session)
 	{
-		User user=(User)session.getAttribute("User");
+		User user=(User)session.getAttribute("user");
 		if(user==null)
 		{
 			Error error=new Error(3,"unAuthorized user");
@@ -51,7 +51,7 @@ public class JobRESTController {
 		catch (Exception e) 
 		{
 			Error error=new Error(1,"unable to insert job...."+ e.getMessage());
-			return new ResponseEntity<Error>(error,HttpStatus.INTERNAL_SERVER_ERROR);
+			return new ResponseEntity<Error>(error,HttpStatus.OK);
 		}
 	}
 	

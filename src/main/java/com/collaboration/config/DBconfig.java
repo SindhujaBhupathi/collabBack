@@ -14,6 +14,8 @@ import org.springframework.orm.hibernate5.HibernateTransactionManager;
 import org.springframework.orm.hibernate5.LocalSessionFactoryBuilder;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 
+import com.collaboration.model.BlogComment;
+import com.collaboration.model.BlogPost;
 import com.collaboration.model.Job;
 import com.collaboration.model.User;
 
@@ -52,12 +54,11 @@ public class DBconfig {
 			sessionBuilder.scanPackages("com.collaboration");
 			sessionBuilder.addAnnotatedClass(User.class);
 			sessionBuilder.addAnnotatedClass(Job.class);
+			sessionBuilder.addAnnotatedClasses(BlogPost.class);
+			sessionBuilder.addAnnotatedClass(BlogComment.class);
 			System.out.println("Session factory config");
 			return sessionBuilder.buildSessionFactory();
-			/*sessionBuilder.scanPackages("com.collaboration");
-			System.out.println("Session");
-			return sessionBuilder.buildSessionFactory();
-			*/
+			
 		}
 
 		@Autowired

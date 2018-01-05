@@ -60,10 +60,13 @@ public class UserServiceImpl implements UserService{
 		return userDAO.updateUser(users);
 	}
 
-	public User getUser(int userId) {
-		return userDAO.getUser(userId);
+	public User getUserByUsername(String username) {
+		// TODO Auto-generated method stub
+		return userDAO.getUserByUsername(username);
 	}
 
+	
+	
 	
 	
 }

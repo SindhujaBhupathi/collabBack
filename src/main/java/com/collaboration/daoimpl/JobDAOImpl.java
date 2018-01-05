@@ -15,6 +15,7 @@ import com.collaboration.model.Job;
 
 
 @Repository
+@Transactional
 public class JobDAOImpl  implements JobDAO{
 	
 	
@@ -36,7 +37,7 @@ Logger Logger=LoggerFactory.getLogger(JobDAOImpl.class);
 		session.close();
 		return true;
 	}
-
+@Transactional
 	public List<Job> getAllJobs() {
 		Session session=sessionFactory.openSession();
 		Query query=session.createQuery("from Job");
@@ -44,7 +45,7 @@ Logger Logger=LoggerFactory.getLogger(JobDAOImpl.class);
 		session.close();
 		return jobs;
 	}
-
+@Transactional
 	public Job getJobById(int id) {
 		 Session session=sessionFactory.openSession();
 	        Job job=(Job)session.get(Job.class, id);
