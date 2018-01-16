@@ -1,36 +1,27 @@
 package com.collaboration.model;
 
 public class Error {
-
-private int errorCode;
+	private int code; 
+	private String message;
 	
-	private String errorMessage;
-	
-	
-
-	public Error(int errorCode, String errorMessage) {
-		this.errorCode = errorCode;
-		this.errorMessage = errorMessage;
-	}
-
-	public Error() {
+	public Error(int code,String message)
+	{
 		super();
-	}
+		this.code=code;
+		this.message=message;
 
-	public int getErrorCode() {
-		return errorCode;
 	}
-
-	public void setErrorCode(int errorCode) {
-		this.errorCode = errorCode;
+	public int getCode() {
+		return code;
 	}
-
-	public String getErrorMessage() {
-		return errorMessage;
+	public void setCode(int code) {
+		this.code = code;
 	}
-
-	public void setErrorMessage(String errorMessage) {
-		this.errorMessage = errorMessage;
+	public String getMessage() {
+		return message;
+	}
+	public void setMessage(String message) {
+		this.message = message;
 	}
 	
 }

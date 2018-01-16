@@ -14,32 +14,32 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.collaboration.dao.JobDAO;
-import com.collaboration.model.Error;
 import com.collaboration.model.Job;
-import com.collaboration.model.User;
-
+import com.collaboration.dao.JobDao;
+import com.collaboration.model.Error;
+import com.collaboration.model.UsersDetails;
 
 @RestController
-public class JobRESTController {
-	
+public class JobController 
+{
 	@Autowired
-	private JobDAO jobDAO;
+	private JobDao jobDao;
+	
 	@RequestMapping(value="/savejob", method=RequestMethod.POST)
 	public ResponseEntity<?> saveJob(@RequestBody Job job,HttpSession session)
 	{
-		User user=(User)session.getAttribute("user");
-		if(user==null)
+		UsersDetails validUser=(UsersDetails)session.getAttribute("validUser");
+		if(validUser==null)
 		{
-			Error error=new Error(3,"unAuthorized user");
+			Error error=new Error(3,"unAuthorized usersDetails");
 			return new ResponseEntity<Error>(error,HttpStatus.UNAUTHORIZED);
 		}
 		try
 		{
-			if(user.getRole().equals("Admin"))
+			if(validUser.getRole().equals("ADMIN"))
 			{
 				job.setPostedOn(new Date());
-				jobDAO.saveJob(job);
+				jobDao.saveJob(job);
 				return new ResponseEntity<Void>(HttpStatus.OK);
 			}
 			else
@@ -50,34 +50,36 @@ public class JobRESTController {
 		}
 		catch (Exception e) 
 		{
-			Error error=new Error(1,"unable to insert job...."+ e.getMessage());
-			return new ResponseEntity<Error>(error,HttpStatus.OK);
+			Error error=new Error(1,"unable to insert jobdetails...."+ e.getMessage());
+			return new ResponseEntity<Error>(error,HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}
 	
 	@RequestMapping(value="/getalljobs",method=RequestMethod.GET)
 	public ResponseEntity<?> getAllJobs(HttpSession session)
 	{
-		User user =(User)session.getAttribute("User");
-		if(user==null)
+		UsersDetails validUser =(UsersDetails)session.getAttribute("validUser");
+		if(validUser==null)
 		{
 			Error error=new Error(3,"UnAuthorized user");
 			return new ResponseEntity<Error>(error,HttpStatus.UNAUTHORIZED);
 		}
-		List<Job> job=jobDAO.getAllJobs();
-		return new ResponseEntity<List<Job>>(job,HttpStatus.OK);
+		List<Job> jobs=jobDao.getAllJobs();
+		return new ResponseEntity<List<Job>>(jobs,HttpStatus.OK);
 	}
 	
 
-@RequestMapping(value="/getjobbyid/{id}",method=RequestMethod.GET)
-public ResponseEntity<?> getJobById(@PathVariable int id,HttpSession session){
-	User user=(User)session.getAttribute("User");
-    if(user==null){
-         Error error=new Error(3,"UnAuthorized user");
-            return new ResponseEntity<Error>(error,HttpStatus.UNAUTHORIZED);
+		@RequestMapping(value="/getjobbyid/{id}",method=RequestMethod.GET)
+			public ResponseEntity<?> getJobById(@PathVariable int id,HttpSession session){
+			UsersDetails validUser=(UsersDetails)session.getAttribute("validUser");
+			if(validUser==null){
+				Error error=new Error(3,"UnAuthorized user");
+				return new ResponseEntity<Error>(error,HttpStatus.UNAUTHORIZED);
     }
-    Job job=jobDAO.getJobById(id);
-    return new ResponseEntity<Job>(job,HttpStatus.OK);
-}
+			
+			Job job=jobDao.getJobById(id);
+			return new ResponseEntity<Job>(job,HttpStatus.OK);
+		}
+	}
 	
-}
+	

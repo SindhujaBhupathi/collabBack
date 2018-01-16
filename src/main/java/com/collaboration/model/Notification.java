@@ -1,15 +1,11 @@
 package com.collaboration.model;
-
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
-import org.springframework.stereotype.Component;
-
 @Entity
 @Table(name="notification")
-@Component
 public class Notification {
 	@Id
 	@GeneratedValue
@@ -20,6 +16,8 @@ public class Notification {
 	private String approvalStatus;
 	private String rejectionReason;
 	private boolean viewed;
+	
+	
 	public int getId() {
 		return id;
 	}
@@ -56,5 +54,4 @@ public class Notification {
 	public void setViewed(boolean viewed) {
 		this.viewed = viewed;
 	}
-	
 }

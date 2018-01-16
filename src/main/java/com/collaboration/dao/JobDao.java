@@ -4,10 +4,9 @@ import java.util.List;
 
 import com.collaboration.model.Job;
 
-public interface JobDAO {
-	
-	boolean saveJob(Job job);
+public interface JobDao 
+{
+	void saveJob(Job job);
 	List<Job> getAllJobs();
 	Job getJobById(int id);
-	
 }

@@ -1,10 +1,10 @@
-package com.collaboration.service;
+package com.collaboration.dao;
 
 import java.util.List;
 
 import com.collaboration.model.UsersDetails;
 
-public interface UserService {
+public interface UsersDAO {
 	
 	public boolean saveOrUpdate(UsersDetails users);
 	public UsersDetails updateUser(UsersDetails users);
@@ -15,4 +15,5 @@ public interface UserService {
 	public UsersDetails login(String username,String password);
 	public boolean isUsernameValid(String username);
 	public boolean isEmailValid(String email);
+	
 }

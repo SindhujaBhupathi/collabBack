@@ -5,68 +5,59 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.collaboration.dao.UserDAO;
-import com.collaboration.model.User;
+import com.collaboration.dao.UsersDAO;
+import com.collaboration.model.UsersDetails;
 
+	@Service
+	public class UserServiceImpl implements UserService {
 
-@Service
-public class UserServiceImpl implements UserService{
-	
-	
-	@Autowired
-	private UserDAO userDAO;
-	
-	public boolean saveOrUpdate(User users) {
+		@Autowired
+		UsersDAO usersDAO;
 
-		return userDAO.saveOrUpdate(users);
-	}
+		public boolean saveOrUpdate(UsersDetails users) {
 
-	public void delete(User user) {
-		userDAO.delete(user);
+			return usersDAO.saveOrUpdate(users);
+		}
+
+		public void delete(UsersDetails user) {
+			usersDAO.delete(user);
+			
+		}
+
+		public UsersDetails getUserByUsername(String username) {
+			return usersDAO.getUserByUsername(username);
+		}
+
+		public UsersDetails viewUser(int userid) {
+			
+			return usersDAO.viewUser(userid);
+		}
+
+		public List<UsersDetails> UserList() {
 		
-	}
+			return usersDAO.UserList();
+		}
 
-	/*public User getUser(String username) {
-		return userDAO.getUser(username);
-	}*/
+		public UsersDetails login(String username,String password) {
+			
+			return usersDAO.login(username,password);
+		}
 
-	public User viewUser(int userid) {
+		public boolean isUsernameValid(String username) {
 		
-		return userDAO.viewUser(userid);
-	}
+			return usersDAO.isUsernameValid(username);
+		}
 
-	public List<User> UserList() {
-	
-		return userDAO.UserList();
-	}
-
-	public User login(User user) {
+		public boolean isEmailValid(String email) {
 		
-		return userDAO.login(user);
+			return usersDAO.isEmailValid(email);
+		}
+
+		public UsersDetails updateUser(UsersDetails users) {
+
+			return usersDAO.updateUser(users);
+		}
+
+
+	
 	}
-
-	public boolean isUsernameValid(String username) {
-	
-		return userDAO.isUsernameValid(username);
-	}
-
-	public boolean isEmailValid(String email) {
-	
-		return userDAO.isEmailValid(email);
-	}
-
-	public User updateUser(User users) {
-
-		return userDAO.updateUser(users);
-	}
-
-	public User getUserByUsername(String username) {
-		// TODO Auto-generated method stub
-		return userDAO.getUserByUsername(username);
-	}
-
-	
-	
-	
-	
-}
