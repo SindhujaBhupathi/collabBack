@@ -6,6 +6,8 @@ public class Chat {
 	private String from;
 	
 	
+	
+	
 	public String getMessage() {
 		return message;
 	}

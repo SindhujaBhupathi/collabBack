@@ -39,6 +39,7 @@ public class WebSocketConfiguration implements WebSocketMessageBrokerConfigurer 
 		
 	}
 
+	
 	public void configureMessageBroker(MessageBrokerRegistry configurer) {
 		System.out.println("CONFIGURE MESSAGE BROKER REGISTRY");
 		configurer.enableSimpleBroker("/queue/", "/topic/");
