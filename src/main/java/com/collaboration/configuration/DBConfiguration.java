@@ -16,6 +16,7 @@ import org.springframework.orm.hibernate5.LocalSessionFactoryBuilder;
 import com.collaboration.model.BlogComment;
 import com.collaboration.model.BlogPost;
 import com.collaboration.model.BlogPostLikes;
+import com.collaboration.model.Chat;
 import com.collaboration.model.Friend;
 import com.collaboration.model.Job;
 import com.collaboration.model.Notification;
@@ -68,6 +69,7 @@ Logger logger =LoggerFactory.getLogger(DBConfiguration.class);
 		sessionBuilder.addAnnotatedClass(Notification.class);
 		sessionBuilder.addAnnotatedClass(ProfilePicture.class);
 		sessionBuilder.addAnnotatedClass(Friend.class);
+		sessionBuilder.addAnnotatedClass(Chat.class);
 		
 		logger.info("========Hibernate SessionFactory Object created=========== ");
 		return sessionBuilder.buildSessionFactory();
