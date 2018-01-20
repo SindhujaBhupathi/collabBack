@@ -104,8 +104,7 @@ public class BlogPostController {
 			return new ResponseEntity<Error>(error,HttpStatus.UNAUTHORIZED);//401
 		}
 		try{
-			//if admin selects Approve, blogPost.approved=1
-			//if admin selects Reject, blogPost.approved=0
+			
 			System.out.println(blogPost);
 		blogPostDao.updateBlogPost(blogPost,rejectionReason);
 		}catch(Exception e){
@@ -123,13 +122,10 @@ public class BlogPostController {
 		UsersDetails validUser = (UsersDetails) session.getAttribute("validUser");
 		if(validUser==null){
 			Error error=new Error(5,"Unauthorized access");
-			return new ResponseEntity<Error>(error,HttpStatus.UNAUTHORIZED);//401
+			return new ResponseEntity<Error>(error,HttpStatus.UNAUTHORIZED);
 		}
 		UsersDetails usersDetails=userDAO.getUserByUsername(validUser.getUsername());
 		BlogPost blogPost=blogPostDao.getBlogById(id);
-		//blogPostLikes = null / 1 object
-		// if user has not yet liked the blogPost, blogPostLikes = null
-		//if user has liked the blogPost already, blogPostLikes= 1 object
 		BlogPostLikes blogPostLikes=blogPostLikesDao.userLikes(blogPost, usersDetails);
 		return new ResponseEntity<BlogPostLikes>(blogPostLikes,HttpStatus.OK);
 	}
@@ -149,7 +145,6 @@ public class BlogPostController {
 	
 	
 	@RequestMapping(value="/addcomment",method=RequestMethod.POST)
-	//http://localhost:8080/project2middleware/addcomment?commentText='Thanks'&id=484
 	public ResponseEntity<?> addBlogComment(@RequestParam String commentText , @RequestParam int id
 			,HttpSession session){
 		UsersDetails validUser = (UsersDetails) session.getAttribute("validUser");
