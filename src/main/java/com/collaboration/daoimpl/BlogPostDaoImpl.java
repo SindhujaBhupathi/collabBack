@@ -44,6 +44,7 @@ public class BlogPostDaoImpl implements BlogPostDao {
 		return query.list();
 	}
 	
+	
 	@Transactional
 	public BlogPost getBlogById(int id) {
 		Session session = sessionFactory.getCurrentSession();

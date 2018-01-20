@@ -42,7 +42,7 @@ public class BlogPostLikesDaoImpl implements BlogPostLikesDao{
 			//like
 			if(blogPostLikes==null){ //insert into blogpostlikes, increment blogpost.likes
 				BlogPostLikes insertLikes=new BlogPostLikes();
-				insertLikes.setBlogPost(blogPost);//FK blogpost_id
+	            insertLikes.setBlogPost(blogPost);//FK blogpost_id
 				insertLikes.setUser(user);//FK user_username
 				session.save(insertLikes); //insert into blogpostlikes
 				blogPost.setLikes(blogPost.getLikes() + 1); //increment the number of likes
