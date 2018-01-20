@@ -46,7 +46,7 @@ public class UsersDAOImpl implements UsersDAO {
 		@SuppressWarnings("deprecation")
 		@Transactional
 		public UsersDetails getUserByUsername(String username) {
-		Criteria c=sessionFactory.getCurrentSession().createCriteria(UsersDetails.class);
+		Criteria c=sessionFactory.openSession().createCriteria(UsersDetails.class);
 		c.add(Restrictions.eq("username", username));
 		UsersDetails user=(UsersDetails)c.uniqueResult();
 		return user;

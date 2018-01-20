@@ -39,7 +39,7 @@ public class BlogPostDaoImpl implements BlogPostDao {
 	
 	@Transactional
 	public List<BlogPost> getBlogs(int approved) {
-		Session session = sessionFactory.getCurrentSession();
+		Session session = sessionFactory.openSession();
 		Query query = session.createQuery("from BlogPost where approved=" + approved);
 		return query.list();
 	}

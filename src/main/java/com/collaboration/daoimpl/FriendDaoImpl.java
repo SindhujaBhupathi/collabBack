@@ -47,15 +47,16 @@ public class FriendDaoImpl implements FriendDao {
 	
 
 
+	@Transactional
 	public void addFriendRequest(Friend friend) {
-		Session session=sessionFac.getCurrentSession();
+		Session session=sessionFac.openSession();
 		session.save(friend); //insert into friend values(fromId,toId,status)
 		
 	}
 
-	
+	@Transactional
 	public List<Friend> pendingRequests(String username) {
-		Session session=sessionFac.getCurrentSession();
+		Session session=sessionFac.openSession();
 	Query query=session.createQuery("from Friend where toId=? and status=?");
 	query.setString(0, username);
 	query.setCharacter(1,'P');
