@@ -20,7 +20,7 @@ public class BlogPostLikesDaoImpl implements BlogPostLikesDao{
 	private SessionFactory sessionFactory;
 	@Transactional
 		public BlogPostLikes userLikes(BlogPost blogPost, UsersDetails user) {
-			Session session=sessionFactory.getCurrentSession();
+			Session session=sessionFactory.openSession();
 			//select * from blogpostlikes_s180133 where blogpost_id=? and user_username=?
 			Query query=session.createQuery("from BlogPostLikes where blogPost.id=? and user.username=? ");
 			System.out.println("BlogPost id  " + blogPost.getId());
@@ -36,7 +36,7 @@ public class BlogPostLikesDaoImpl implements BlogPostLikesDao{
 	
 	@Transactional
 		public BlogPost updateLikes(BlogPost blogPost, UsersDetails user) {
-			Session session=sessionFactory.getCurrentSession();
+			Session session=sessionFactory.openSession();
 			BlogPostLikes blogPostLikes=userLikes(blogPost,user);
 			//insert and increment  / delete and decrement
 			//like

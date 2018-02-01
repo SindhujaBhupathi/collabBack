@@ -47,14 +47,15 @@ public class BlogPostDaoImpl implements BlogPostDao {
 	
 	@Transactional
 	public BlogPost getBlogById(int id) {
-		Session session = sessionFactory.getCurrentSession();
+		Session session = sessionFactory.openSession();
 		BlogPost blogPost = (BlogPost) session.get(BlogPost.class, id);
 		return blogPost;
 	}
 
 		@Transactional
 	public void updateBlogPost(BlogPost blogPost, String rejectionReason) {
-		Session session = sessionFactory.getCurrentSession();
+		Session session = sessionFactory.openSession();
+		Transaction tx=session.beginTransaction();
 		Notification notification = new Notification();
 		notification.setBlogTitle(blogPost.getBlogTitle());
 		notification.setUsername(blogPost.getPostedBy().getUsername());// author
@@ -66,6 +67,7 @@ public class BlogPostDaoImpl implements BlogPostDao {
 									// radio button is selected by admin]
 			session.update(blogPost);// update blogpost set approved=1 where
 										// id=?
+			tx.commit();
 			notification.setApprovalStatus("Approved");
 			session.save(notification);// insert into notification values (...)
 		} else {// false admin rejects the blogpost [Reject radio button is

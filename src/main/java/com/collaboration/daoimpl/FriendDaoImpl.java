@@ -10,6 +10,7 @@ import org.hibernate.Query;
 import org.hibernate.SQLQuery;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.hibernate.Transaction;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.object.SqlQuery;
 import org.springframework.stereotype.Repository;
@@ -50,8 +51,10 @@ public class FriendDaoImpl implements FriendDao {
 	@Transactional
 	public void addFriendRequest(Friend friend) {
 		Session session=sessionFac.openSession();
-		session.save(friend); //insert into friend values(fromId,toId,status)
 		
+		Transaction tx=session.beginTransaction();
+		session.save(friend); //insert into friend values(fromId,toId,status)
+		tx.commit();
 	}
 
 	@Transactional
@@ -64,9 +67,9 @@ public class FriendDaoImpl implements FriendDao {
 		return pendingRequests;
 	}
 
-
+	@Transactional
 	public void updatePendingRequest(Friend friend) {
-	Session session=sessionFac.getCurrentSession();
+	Session session=sessionFac.openSession();
 	if(friend.getStatus()=='A')
 		session.update(friend); //update friend set status='A' where id=?
 	else
