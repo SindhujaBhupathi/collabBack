@@ -120,7 +120,7 @@ public class UsersDAOImpl implements UsersDAO {
 		Transaction tx=session.beginTransaction();
 		session.update(validUser);
 		tx.commit();
-		session.clear();
+		session.close();
 		return validUser;
 	}
 	}

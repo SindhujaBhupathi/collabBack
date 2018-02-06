@@ -70,16 +70,22 @@ public class FriendDaoImpl implements FriendDao {
 	@Transactional
 	public void updatePendingRequest(Friend friend) {
 	Session session=sessionFac.openSession();
+	
+	/*Transaction tx=session.beginTransaction();
+	session.save(friend); //insert into friend values(fromId,toId,status)
+	tx.commit();*/
+	Transaction tx=session.beginTransaction();
 	if(friend.getStatus()=='A')
 		session.update(friend); //update friend set status='A' where id=?
 	else
 		session.delete(friend);  //delete friend where id=?
-		
+	tx.commit();
+	session.close();
 		
 	}
 
 	public List<UsersDetails> listofFriends(String username) {
-		Session session=sessionFac.getCurrentSession();
+		Session session=sessionFac.openSession();
 	SQLQuery query1=session.createSQLQuery("select * from  C_USERS where username in " + "(select toId from Friend where fromId=? and status='A')");
 	SQLQuery query2=session.createSQLQuery("select * from C_USERS where username in (select fromId from Friend where toId=? and status='A') ")	;
 	query1.setString(0, username);
