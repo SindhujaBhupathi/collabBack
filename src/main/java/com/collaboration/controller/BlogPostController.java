@@ -138,8 +138,10 @@ public class BlogPostController {
 			Error error=new Error(5,"Unauthorized access");
 			return new ResponseEntity<Error>(error,HttpStatus.UNAUTHORIZED);//401
 		}
+		
 		UsersDetails usersDetails=userDAO.getUserByUsername(validUser.getUsername());
 		BlogPost updatedBlogPost=blogPostLikesDao.updateLikes(blogPost, usersDetails);
+		updatedBlogPost = blogPostDao.getBlogById(blogPost.getId());
 		return new ResponseEntity<BlogPost>(updatedBlogPost,HttpStatus.OK);
 	}
 	

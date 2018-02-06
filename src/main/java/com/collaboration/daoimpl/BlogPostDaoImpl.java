@@ -84,10 +84,14 @@ public class BlogPostDaoImpl implements BlogPostDao {
 		}
 	}
 
-		@Transactional
+		//@Transactional
 	public void addComment(BlogComment blogComment) {
-        Session session=sessionFactory.getCurrentSession();
+        Session session=sessionFactory.openSession();
+        Transaction tx = null;
+	    tx = session.beginTransaction();
         session.save(blogComment);//insert into blogcomment_s180133 ...
+        tx.commit();
+        session.close();
 		
 	}
 
